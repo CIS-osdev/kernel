@@ -2,7 +2,7 @@ SRCS := $(shell find kernel/ -name "*.c" -o -name "*.s")
 OBJS := $(patsubst %.c, %.o, $(patsubst %.s, %.o, $(SRCS)))
 $(shell mkdir -p $(dir $(OBJS)))
 
-CFLAGS = -m64 -Wall -Werror -std=gnu11 -Ikernel/include -ffreestanding -O0 
+CFLAGS = -m64 -Wall -Werror -std=gnu11 -Ikernel/include -ffreestanding -O0 -fno-stack-protector 
 ASFLAGS = -64
 
 all: cis-os.iso
