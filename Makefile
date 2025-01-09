@@ -5,7 +5,7 @@ $(shell mkdir -p $(dir $(OBJS)))
 CFLAGS = -m64 -Wall -Werror -std=gnu11 -Ikernel/include -ffreestanding -O0 -fno-stack-protector 
 ASFLAGS = -64
 
-.PHONY: all run test clean
+.PHONY: all run test clean format
 
 all: cis-os.iso
 
@@ -18,7 +18,7 @@ cis-os.iso: kernel/kernel.elf boot/grub.cfg
 	grub-mkrescue -o cis-os.iso isodir
 
 kernel/kernel.elf: $(OBJS)
-	ld -nostdlib -o $@ -T scripts/linker.ld $(OBJS)
+	ld -z noexecstack -nostdlib -o $@ -T scripts/linker.ld $(OBJS)
 
 %.o: %.c
 	gcc $(CFLAGS) -c -o $@ $<
@@ -27,7 +27,7 @@ kernel/kernel.elf: $(OBJS)
 	as $(ASFLAGS) -o $@ $<
 
 serial.log: cis-os.iso
-	timeout 10s qemu-system-x86_64 -nographic -m 256 -cdrom $< -d guest_errors -serial file:$@ --no-reboot -no-shutdown || true
+	timeout 10s qemu-system-x86_64 -display none -m 256 -cdrom $< -d guest_errors -serial file:$@ --no-reboot -no-shutdown || true
 
 test: serial.log
 	cat $<
@@ -42,3 +42,6 @@ clean:
 	rm -rf kernel/kernel.elf cis-os.iso
 	find kernel/ -name "*.o" -delete
 	rm -f serial.log
+
+format:
+	find . -type d -name "3rd" -prune -o -type f \( -name "*.c" -o -name "*.h" \) -print0 | xargs -0 clang-format -i -style=file

@@ -26,7 +26,7 @@ Users: 0
 
 1. Установите необходимые инструменты:
 ```bash
-sudo apt install gcc build-essential grub2-common qemu-system-x86 xorriso mtools
+sudo apt install gcc build-essential grub2-common qemu-system-x86 xorriso mtools clang-format
 ```
 
 2. Соберите проект:
