@@ -8,7 +8,8 @@
 .set MULTIBOOT_MAGIC,              0x1BADB002
 .set MULTIBOOT_FLAG_PAGE_ALIGN,    1 << 0
 .set MULTIBOOT_FLAG_MEMORY_INFO,   1 << 1
-.set MULTIBOOT_FLAGS,              MULTIBOOT_FLAG_PAGE_ALIGN | MULTIBOOT_FLAG_MEMORY_INFO
+.set MULTIBOOT_VIDEO_MODE,         1 << 2
+.set MULTIBOOT_FLAGS,              MULTIBOOT_FLAG_PAGE_ALIGN | MULTIBOOT_FLAG_MEMORY_INFO | MULTIBOOT_VIDEO_MODE
 .set MULTIBOOT_CHECKSUM,           -(MULTIBOOT_MAGIC + MULTIBOOT_FLAGS)
 
 .align 4
@@ -21,6 +22,10 @@ multiboot_header:
 .long bss_start
 .long end
 .long _start
+.long 0
+.long 1280
+.long 800
+.long 32
 
 .section .stack, "aw", @nobits
 stack_bottom:

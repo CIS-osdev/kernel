@@ -1,4 +1,5 @@
 #include <3rd/multiboot.h>
+#include <khal.h>
 #include <kstdint.h>
 
 #define CHECK_FLAG(flags, bit) ((flags) & (1 << (bit)))
@@ -7,18 +8,21 @@
 int multiboot_init(uint64_t *addr, uint32_t magic) {
 	multiboot_info_t *mbi;
 
+	serial_write_byte('1' + __COUNTER__);
 	/* Am I booted by a Multiboot-compliant boot loader? */
 	if (magic != MULTIBOOT_BOOTLOADER_MAGIC) {
 		printf("Invalid magic number: 0x%x\n", (unsigned)magic);
 		return -1;
 	}
 
+	serial_write_byte('1' + __COUNTER__);
 	/* Set MBI to the address of the Multiboot information structure. */
 	mbi = (multiboot_info_t *)addr;
 
 	/* Print out the flags. */
 	printf("flags = 0x%x\n", (unsigned)mbi->flags);
 
+	serial_write_byte('1' + __COUNTER__);
 	/* Are mem_* valid? */
 	if (CHECK_FLAG(mbi->flags, 0))
 		printf("mem_lower = %uKB, mem_upper = %uKB\n", (unsigned)mbi->mem_lower,
@@ -30,6 +34,7 @@ int multiboot_init(uint64_t *addr, uint32_t magic) {
 	/* Is the command line passed? */
 	if (CHECK_FLAG(mbi->flags, 2)) printf("cmdline = %s\n", (char *)mbi->cmdline);
 
+	serial_write_byte('1' + __COUNTER__);
 	/* Are mods_* valid? */
 	if (CHECK_FLAG(mbi->flags, 3)) {
 		multiboot_module_t *mod = (multiboot_module_t *)(uint64_t)mbi->mods_addr;
@@ -45,6 +50,7 @@ int multiboot_init(uint64_t *addr, uint32_t magic) {
 		return -1;
 	}
 
+	serial_write_byte('1' + __COUNTER__);
 	/* Is the symbol table of a.out valid? */
 	if (CHECK_FLAG(mbi->flags, 4)) {
 		multiboot_aout_symbol_table_t *multiboot_aout_sym __attribute__((unused)) =
@@ -67,6 +73,7 @@ int multiboot_init(uint64_t *addr, uint32_t magic) {
 		       (unsigned)multiboot_elf_sec->addr, (unsigned)multiboot_elf_sec->shndx);
 	}
 
+	serial_write_byte('1' + __COUNTER__);
 	/* Are mmap_* valid? */
 	if (CHECK_FLAG(mbi->flags, 6)) {
 		multiboot_memory_map_t *mmap;
@@ -84,6 +91,7 @@ int multiboot_init(uint64_t *addr, uint32_t magic) {
 			       (unsigned)(mmap->len & 0xffffffff), (unsigned)mmap->type);
 	}
 
+	serial_write_byte('1' + __COUNTER__);
 	/* Draw diagonal blue line. */
 	if (CHECK_FLAG(mbi->flags, 12)) {
 		multiboot_uint32_t color;
@@ -143,5 +151,6 @@ int multiboot_init(uint64_t *addr, uint32_t magic) {
 			}
 		}
 	}
+	serial_write_byte('1' + __COUNTER__);
 	return 1;
 }
