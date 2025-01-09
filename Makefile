@@ -25,7 +25,7 @@ kernel/kernel.elf: $(OBJS)
 	as $(ASFLAGS) -o $@ $<
 
 serial.log: cis-os.iso
-	timeout 10s qemu-system-x86_64 -m 256 -cdrom $< -d guest_errors -serial file:$@ --no-reboot -no-shutdown || true
+	timeout 10s qemu-system-x86_64 -nographics -m 256 -cdrom $< -d guest_errors -serial file:$@ --no-reboot -no-shutdown || true
 
 test: serial.log
 	cat $<
