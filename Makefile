@@ -29,6 +29,7 @@ serial.log: cis-os.iso
 
 test: serial.log
 	cat $<
+	ls
 	grep -q '\[OK\]' $< && echo "Test passed." || (echo "Test failed." && exit 1)
 
 run: cis-os.iso
