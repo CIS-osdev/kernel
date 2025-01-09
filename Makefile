@@ -25,14 +25,14 @@ kernel/kernel.elf: $(OBJS)
 	as $(ASFLAGS) -o $@ $<
 
 serial.log: cis-os.iso
-	timeout 10s qemu-system-x86_64 -m 256 -cdrom $< -d guest_errors -serial file:$@ || true
+	timeout 10s qemu-system-x86_64 -m 256 -cdrom $< -d guest_errors -serial file:$@ --no-reboot -no-shutdown || true
 
 test: serial.log
 	cat $<
 	grep -q '\[OK\]' $< && echo "Test passed." || (echo "Test failed." && exit 1)
 
 run: cis-os.iso
-	qemu-system-x86_64 -m 256 -cdrom $< -d guest_errors -serial file:serial.log
+	qemu-system-x86_64 -m 256 -cdrom $< -d guest_errors -serial file:serial.log --no-reboot -no-shutdown
 
 clean:
 	rm -rf isodir
