@@ -19,7 +19,10 @@ void puts(char *str) {
 }
 
 void kernel_main64() {
-    hal_write_byte_manual('C');
+    hal_write_byte_manual('[');
+    hal_write_byte_manual('O');
+    hal_write_byte_manual('K');
+    hal_write_byte_manual(']');
     puts("Hello, World from CIS! ");
     for(;;) {}
 }
