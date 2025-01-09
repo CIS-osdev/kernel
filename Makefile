@@ -28,4 +28,4 @@ clean:
 	find kernel/ -name "*.o" -delete
 
 run:
-	qemu-system-x86_64 -m 256 -cdrom cis-os.iso
+	qemu-system-x86_64 -m 256 -cdrom cis-os.iso -d guest_errors -serial file:serial.log

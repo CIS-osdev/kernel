@@ -1,5 +1,7 @@
 # kernel
 
+[![C/C++ CI](https://github.com/CIS-osdev/kernel/actions/workflows/c-cpp.yml/badge.svg?branch=master)](https://github.com/CIS-osdev/kernel/actions/workflows/c-cpp.yml)
+
 Это проект анархичной операционной системы
 
 ## Сборка и запуск
