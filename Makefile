@@ -5,6 +5,8 @@ $(shell mkdir -p $(dir $(OBJS)))
 CFLAGS = -m64 -Wall -Werror -std=gnu11 -Ikernel/include -ffreestanding -O0 -fno-stack-protector 
 ASFLAGS = -64
 
+.PHONY: all run test clean
+
 all: cis-os.iso
 
 cis-os.iso: kernel/kernel.elf boot/grub.cfg
@@ -22,10 +24,18 @@ kernel/kernel.elf: $(OBJS)
 %.o: %.s
 	as $(ASFLAGS) -o $@ $<
 
+serial.log: cis-os.iso
+	timeout 10s qemu-system-x86_64 -m 256 -cdrom $< -d guest_errors -serial file:$@ || true
+
+test: serial.log
+	cat $<
+	grep -q '\[OK\]' $< && echo "Test passed." || (echo "Test failed." && exit 1)
+
+run: cis-os.iso
+	qemu-system-x86_64 -m 256 -cdrom $< -d guest_errors -serial file:serial.log
+
 clean:
 	rm -rf isodir
 	rm -rf kernel/kernel.elf cis-os.iso
 	find kernel/ -name "*.o" -delete
-
-run:
-	qemu-system-x86_64 -m 256 -cdrom cis-os.iso -d guest_errors -serial file:serial.log
+	rm -f serial.log
