@@ -1,12 +1,14 @@
 # kernel
 
+[![C/C++ CI](https://github.com/CIS-osdev/kernel/actions/workflows/c-cpp.yml/badge.svg?branch=master)](https://github.com/CIS-osdev/kernel/actions/workflows/c-cpp.yml)
+
 Это проект анархичной операционной системы
 
 ## Сборка и запуск
 
 1. Установите необходимые инструменты:
 ```bash
-sudo apt install gcc build-essential grub2-common qemu
+sudo apt install gcc build-essential grub2-common qemu-system-x86 xorriso mtools
 ```
 
 2. Соберите проект:
