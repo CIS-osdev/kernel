@@ -5,7 +5,7 @@ $(shell mkdir -p $(dir $(OBJS)))
 CFLAGS = -m64 -Wall -Werror -std=gnu11 -Ikernel/include -ffreestanding -O0 -fno-stack-protector 
 ASFLAGS = -64
 
-.PHONY: all run test clean
+.PHONY: all run test clean format
 
 all: cis-os.iso
 
@@ -42,3 +42,6 @@ clean:
 	rm -rf kernel/kernel.elf cis-os.iso
 	find kernel/ -name "*.o" -delete
 	rm -f serial.log
+
+format:
+	find . -type d -name "3rd" -prune -o -type f \( -name "*.c" -o -name "*.h" \) -print0 | xargs -0 clang-format -i -style=file
