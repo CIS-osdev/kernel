@@ -13,6 +13,8 @@ cis-os.iso: kernel/kernel.elf boot/grub.cfg
 	mkdir -p isodir/boot/grub
 	cp kernel/kernel.elf isodir/boot/kernel.elf
 	cp boot/grub.cfg isodir/boot/grub/grub.cfg
+	cd initrd && find . -print | cpio -o -H newc > ../initrd.cpio && cd ..
+	cp initrd.cpio isodir/initrd.cpio
 	grub-mkrescue -o cis-os.iso isodir
 
 kernel/kernel.elf: $(OBJS)
