@@ -8,7 +8,7 @@
 
 1. Установите необходимые инструменты:
 ```bash
-sudo apt install gcc build-essential grub2-common qemu
+sudo apt install gcc build-essential grub2-common qemu-system-x86 xorriso mtools
 ```
 
 2. Соберите проект:
