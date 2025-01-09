@@ -1,27 +1,42 @@
+OUTPUT_FORMAT(elf64-x86-64)
 ENTRY(_start)
 
-SECTIONS {
-    . = 0x100000;  # 1MB
+SECTIONS{
+	. = 1M;
+	phys = .;
 
-    .text BLOCK(4K) : ALIGN(4K)
-	{
+	.text BLOCK(4K) : ALIGN(4K) {
 		*(.multiboot)
+		*(.bootstrap)
+		code = .;
 		*(.text)
 	}
 
-    .rodata :
-    {
-        *(.rodata)
-    }
+	.rodata BLOCK(4K) : ALIGN(4K) {
+		*(.rodata)
+	}
 
-    .data :
-    {
-        *(.data)
-    }
+	.data BLOCK(4K) : ALIGN(4K) {
+		data = .;
+		*(.data)
+		*(.symbols)
+		PROVIDE(kernel_symbols_start = .);
+		PROVIDE(kernel_symbols_end = .);
+	}
 
-    .bss :
-    {
-        *(COMMON)
-        *(.bss)
-    }
+	.bss BLOCK(4K) : ALIGN(4K) {
+		PROVIDE(bss_start = .);
+		bss = .;
+		*(COMMON)
+		*(.bss)
+		*(.stack)
+	}
+
+	end = .;
+
+	/DISCARD/ : {
+		*(.comment)
+		*(.eh_frame)
+		*(.note.gnu.build-id)
+	}
 }
