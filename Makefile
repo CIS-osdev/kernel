@@ -18,7 +18,7 @@ cis-os.iso: kernel/kernel.elf boot/grub.cfg
 	grub-mkrescue -o cis-os.iso isodir
 
 kernel/kernel.elf: $(OBJS)
-	ld -nostdlib -o $@ -T scripts/linker.ld $(OBJS)
+	ld -z noexecstack -nostdlib -o $@ -T scripts/linker.ld $(OBJS)
 
 %.o: %.c
 	gcc $(CFLAGS) -c -o $@ $<
