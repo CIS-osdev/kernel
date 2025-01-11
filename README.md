@@ -1,6 +1,7 @@
 # kernel
 
 [![C/C++ CI](https://github.com/CIS-osdev/kernel/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/CIS-osdev/kernel/actions/workflows/c-cpp.yml)
+[![pages-build-deployment](https://github.com/CIS-osdev/kernel/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/CIS-osdev/kernel/actions/workflows/pages/pages-build-deployment)
 
 [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/russian_os/10921)
 
