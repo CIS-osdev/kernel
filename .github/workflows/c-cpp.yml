@@ -16,7 +16,7 @@ jobs:
     - name: configure
       run: |
         sudo apt update
-        sudo apt install gcc build-essential grub2-common qemu-system-x86 xorriso mtools
+        sudo apt install gcc build-essential grub2-common qemu-system-x86 xorriso mtools cpio
     - name: make
       run: make
     - name: run and test
