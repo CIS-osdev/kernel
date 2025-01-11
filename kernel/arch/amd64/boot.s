@@ -5,27 +5,61 @@
 .extern end
 .extern phys
 
-.set MULTIBOOT_MAGIC,              0x1BADB002
-.set MULTIBOOT_FLAG_PAGE_ALIGN,    1 << 0
-.set MULTIBOOT_FLAG_MEMORY_INFO,   1 << 1
-.set MULTIBOOT_VIDEO_MODE,         1 << 2
-.set MULTIBOOT_FLAGS,              MULTIBOOT_FLAG_PAGE_ALIGN | MULTIBOOT_FLAG_MEMORY_INFO | MULTIBOOT_VIDEO_MODE
-.set MULTIBOOT_CHECKSUM,           -(MULTIBOOT_MAGIC + MULTIBOOT_FLAGS)
+.set MULTIBOOT2_MAGIC,             0xE85250D6
+.set MULTIBOOT2_ARCHITECTURE,      0  # 0 for i386, 4 for MIPS, etc.
+.set MULTIBOOT2_HEADER_LENGTH,     (multiboot2_header_end - multiboot2_header)
+.set MULTIBOOT2_CHECKSUM,          -(MULTIBOOT2_MAGIC + MULTIBOOT2_ARCHITECTURE + MULTIBOOT2_HEADER_LENGTH)
 
-.align 4
-multiboot_header:
-.long MULTIBOOT_MAGIC
-.long MULTIBOOT_FLAGS
-.long MULTIBOOT_CHECKSUM
-.long multiboot_header
-.long phys
-.long bss_start
-.long end
-.long _start
-.long 0
-.long 1280
-.long 800
-.long 32
+.align 8
+multiboot2_header:
+    .long MULTIBOOT2_MAGIC
+    .long MULTIBOOT2_ARCHITECTURE
+    .long MULTIBOOT2_HEADER_LENGTH
+    .long MULTIBOOT2_CHECKSUM
+
+    # Information request tag
+    .align 8
+    .short 1  # Type: Information request
+    .short 0  # Flags: None
+    .long 20  # Size: 20 bytes
+    .long 4   # Request memory information
+    .long 6   # Request boot loader name
+    .long 8   # Request BIOS boot device
+    .long 9   # Request memory map
+
+    # Address tag
+    .align 8
+    .short 2  # Type: Address
+    .short 0  # Flags: None
+    .long 24  # Size: 24 bytes
+    .long multiboot2_header  # Header address
+    .long phys              # Load address
+    .long bss_start         # Load end address
+    .long end               # BSS end address
+
+    # Entry address tag
+    .align 8
+    .short 3  # Type: Entry address
+    .short 0  # Flags: None
+    .long 12  # Size: 12 bytes
+    .long _start  # Entry point address
+
+    # Video mode tag
+    .align 8
+    .short 5  # Type: Video mode
+    .short 0  # Flags: None
+    .long 20  # Size: 20 bytes
+    .long 1280  # Width
+    .long 800   # Height
+    .long 32    # Depth
+
+    # End tag
+    .align 8
+    .short 0  # Type: End
+    .short 0  # Flags: None
+    .long 8   # Size: 8 bytes
+
+multiboot2_header_end:
 
 .section .stack, "aw", @nobits
 stack_bottom:
