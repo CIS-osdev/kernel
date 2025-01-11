@@ -2,7 +2,7 @@ SRCS := $(shell find kernel/ -name "*.c" -o -name "*.s")
 OBJS := $(patsubst %.c, %.o, $(patsubst %.s, %.o, $(SRCS)))
 $(shell mkdir -p $(dir $(OBJS)))
 
-CFLAGS = -m64 -Wall -Werror -std=gnu11 -Ikernel/include -ffreestanding -O0 -fno-stack-protector 
+CFLAGS = -m64 -Wall -Werror -std=gnu2x -Ikernel/include -ffreestanding -O0 -fno-stack-protector 
 ASFLAGS = -64
 
 .PHONY: all run test clean format
@@ -27,7 +27,7 @@ kernel/kernel.elf: $(OBJS)
 	as $(ASFLAGS) -o $@ $<
 
 serial.log: cis-os.iso
-	timeout 10s qemu-system-x86_64 -display none -m 256 -cdrom $< -d guest_errors -serial file:$@ --no-reboot -no-shutdown || true
+	timeout 10s qemu-system-x86_64 -vga vmware -display none -m 256 -cdrom $< -d guest_errors -serial file:$@ --no-reboot -no-shutdown || true
 
 test: serial.log
 	cat $<
@@ -35,7 +35,7 @@ test: serial.log
 	grep -q '\[OK\]' $< && echo "Test passed." || (echo "Test failed." && exit 1)
 
 run: cis-os.iso
-	qemu-system-x86_64 -m 256 -cdrom $< -d guest_errors -serial file:serial.log --no-reboot -no-shutdown
+	qemu-system-x86_64 -vga vmware -m 256 -cdrom $< -d guest_errors -serial file:serial.log --no-reboot -no-shutdown
 
 clean:
 	rm -rf isodir
