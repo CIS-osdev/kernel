@@ -1,52 +1,39 @@
-name: "CodeQL Advanced"
+name: C/C++ CI
+
+permissions:
+  contents: read
+  pull-requests: write
 
 on:
+  workflow_dispatch:
+    branches: [ "*" ]
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-  schedule:
-    - cron: '39 12 * * 3'
 
 jobs:
-  analyze:
-    name: Analyze (${{ matrix.language }})
-    runs-on: 'ubuntu-latest'
-    permissions:
-      security-events: write
-      packages: read
-      actions: read
-      contents: read
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - language: c-cpp
-            build-mode: manual
-
+  build:
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
+    - uses: actions/checkout@v4
+    - name: Configure
+      run: |
+        sudo apt update
+        sudo apt install gcc build-essential grub2-common grub-pc xorriso qemu-system-x86 mtools cpio
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: ${{ matrix.language }}
-        build-mode: ${{ matrix.build-mode }}
-
-    - name: Install Dependencies
+        languages: c-cpp
+        build-mode: manual
+    - name: Set up CodeQL Environment
       run: |
-        sudo apt update
-        sudo apt install -y gcc build-essential grub2-common grub-pc xorriso qemu-system-x86 mtools cpio
-
-    - name: Build Project
-      run: |
-        make clean
-        make
-        make test
-
+        source $(codeql env --init)
+    - name: Make Build with CodeQL
+      run: make clean && make
+    - name: Run Tests
+      run: make test
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
-        category: "/language:${{matrix.language}}"
+        category: "/language:c-cpp"
