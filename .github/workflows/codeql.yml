@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: CodeQL C/C++
 
 permissions:
   contents: read
