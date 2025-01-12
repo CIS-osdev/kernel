@@ -2,7 +2,7 @@ SRCS := $(shell find kernel/ -name "*.c" -o -name "*.s")
 OBJS := $(patsubst %.c, %.o, $(patsubst %.s, %.o, $(SRCS)))
 $(shell mkdir -p $(dir $(OBJS)))
 
-CFLAGS = -m64 -Wall -Werror -std=gnu2x -Ikernel/include -ffreestanding -O0 -fno-stack-protector 
+CFLAGS = -m64 -Wall -Werror -std=gnu2x -Ikernel/include -ffreestanding -O0 -fno-stack-protector
 ASFLAGS = -64
 
 .PHONY: all run test clean format
@@ -39,6 +39,7 @@ run: cis-os.iso
 
 clean:
 	rm -rf isodir
+	rm -rf initrd.cpio
 	rm -rf kernel/kernel.elf cis-os.iso
 	find kernel/ -name "*.o" -delete
 	rm -f serial.log
