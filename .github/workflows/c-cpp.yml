@@ -1,4 +1,6 @@
 name: C/C++ CI
+contents: read
+pull-requests: write
 
 on:
   push:
@@ -8,9 +10,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: configure
