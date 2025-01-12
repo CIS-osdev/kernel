@@ -10,6 +10,7 @@ extern uint64_t paging_main[3][512] __attribute__((aligned(4096)));
 
 void serial_write_byte(uint8_t byte);
 int serial_init( );
+void serial_printf(const char *fmt, ...) ;
 
 #else
 #error "Only AMD64 is supported"
