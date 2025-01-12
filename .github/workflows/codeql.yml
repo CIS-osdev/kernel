@@ -2,11 +2,9 @@ name: CodeQL C/C++
 
 permissions:
   contents: read
-  pull-requests: write
 
 on:
   workflow_dispatch:
-    branches: [ "*" ]
   push:
     branches: [ "master" ]
   pull_request:
@@ -17,23 +15,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Configure
+
+    - name: Install Dependencies
       run: |
         sudo apt update
-        sudo apt install gcc build-essential grub2-common grub-pc xorriso qemu-system-x86 mtools cpio
+        sudo apt install -y gcc build-essential grub2-common grub-pc xorriso qemu-system-x86 mtools cpio
+
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
         languages: c-cpp
         build-mode: manual
-    - name: Set up CodeQL Environment
+
+    - name: Build with CodeQL
       run: |
-        source $(codeql env --init)
-    - name: Make Build with CodeQL
-      run: make clean && make
+        make clean
+        make
+
     - name: Run Tests
       run: make test
+
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
-      with:
-        category: "/language:c-cpp"
