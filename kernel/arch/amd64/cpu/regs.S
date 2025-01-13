@@ -1,7 +1,5 @@
 #define __ASSEMBLY__
 
-.intel_syntax noprefix
-
 #include "arch/cpu/tables.h"
 
 .code64
@@ -10,13 +8,13 @@
 
 get_flags:
     pushfd
-    mov rax, [rsp]
+    movq (%rsp), %rax
     popfd
 
     ret
 
 get_rip:
-    mov rax, [rsp]
+    movq (%rsp), %rax
     ret
 
 // TODO because I'm not familiar with x86-64 conventions
