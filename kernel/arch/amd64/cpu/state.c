@@ -4,7 +4,8 @@
 void cpu_state_print() {
 	asm_regs_t current_state;
 
-    serial_printf("The following register dump is a stub and a work-in-progress.\n");
+	serial_printf(
+	    "The following register dump is a stub and a work-in-progress.\n");
 
 	update_asm_regs(&current_state);
 	serial_printf("Registers:\n");
@@ -43,5 +44,5 @@ void cpu_state_print() {
 	// }
 	// serial_printf("\n");
 
-    serial_printf("\n");
+	serial_printf("\n");
 }

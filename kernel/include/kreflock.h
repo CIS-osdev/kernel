@@ -1,6 +1,6 @@
 // NOTE: This file contains code derived from or inspired by:
-//		AstriX ("The AstriX Operating System") at https://codeberg.org/AstriX/AstriX. 
-// Copyright (c) 2023-2025 NotYourFox, sigsegv 
+//		AstriX ("The AstriX Operating System") at https://codeberg.org/AstriX/AstriX.
+// Copyright (c) 2023-2025 NotYourFox, sigsegv
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 // This program is free software: you can redistribute it and/or modify

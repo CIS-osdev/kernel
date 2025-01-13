@@ -2,8 +2,8 @@
 #define __K_STRING
 
 #include "kopsize.h"
-#include <stddef.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 #define string_equal(s1, s2) !strcmp(s1, s2)
 #define string_equal_n(s1, s2, n) !strncmp(s1, s2, n)
@@ -12,7 +12,7 @@
 void memset(void *ptr, char c, size_t size);
 void memcpy(void *dest, const void *src, size_t size);
 void xmemcpy(void *dest, const void *src, size_t size, opsize_t opsize);
-int memcmp(const void* ptr1, const void* ptr2, size_t count);
+int memcmp(const void *ptr1, const void *ptr2, size_t count);
 
 #define _tolower(c) ((c) | 0x20)
 

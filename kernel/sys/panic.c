@@ -1,6 +1,6 @@
-#include "khal.h"
-#include "arch/cpu/state.h"
 #include "arch/cpu/control.h"
+#include "arch/cpu/state.h"
+#include "khal.h"
 #include <stdint.h>
 
 // TODO: make printf-like

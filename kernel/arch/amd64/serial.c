@@ -1,14 +1,13 @@
-#include <kasm.h>
-#include <kstdint.h>
+#include "kasm.h"
+#include "kstdint.h"
 
 void serial_write_byte(uint8_t byte) {
 	// Wait until the transmit holding register is empty
-	while ((inb(0x3f8 + 5) & 0x20) == 0)
-		;
+	while ((inb(0x3f8 + 5) & 0x20) == 0);
 	outb(0x3f8, byte);
 }
 
-int serial_init( ) {
+int serial_init() {
 	// Disable all interrupts
 	outb(0x3f8 + 1, 0x00);
 
@@ -19,7 +18,8 @@ int serial_init( ) {
 	outb(0x3f8, 0x0C);     // Low byte of divisor
 	outb(0x3f8 + 1, 0x00); // High byte of divisor (0 for divisor < 256)
 
-	// Disable DLAB and set communication parameters: 8n1 (8 bits, no parity, 1 stop bit)
+	// Disable DLAB and set communication parameters: 8n1 (8 bits, no parity, 1
+	// stop bit)
 	outb(0x3f8 + 3, 0x03);
 
 	// Enable FIFOs

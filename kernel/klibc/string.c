@@ -72,17 +72,17 @@ void memcpy(void *dest, const void *src, size_t size) {
 	xmemcpy(dest, src, size, OPSIZE_BYTE);
 }
 
-int memcmp(const void* ptr1, const void* ptr2, size_t count) {
-    register const unsigned char* p1 = ptr1;
-    register const unsigned char* p2 = ptr2;
+int memcmp(const void *ptr1, const void *ptr2, size_t count) {
+	register const unsigned char *p1 = ptr1;
+	register const unsigned char *p2 = ptr2;
 
-    while (count-- > 0) {
-        if (*p1++ != *p2++) {
-            return p1[-1] < p2[-1] ? -1 : 1;
-        }
-    }
+	while (count-- > 0) {
+		if (*p1++ != *p2++) {
+			return p1[-1] < p2[-1] ? -1 : 1;
+		}
+	}
 
-    return 0;
+	return 0;
 }
 
 size_t __attribute__((pure)) strlen(const char *s) {
