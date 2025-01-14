@@ -1,5 +1,5 @@
 #include "khal.h"
-#include "kstdint.h"
+#include <stdint.h>
 #include "kstdlib.h"
 #include <3rd/multiboot2.h>
 

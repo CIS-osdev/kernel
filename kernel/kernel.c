@@ -1,5 +1,5 @@
 #include "khal.h"
-#include "kstdint.h"
+#include <stdint.h>
 #include "kstring.h"
 #include "sys/panic.h"
 

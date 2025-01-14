@@ -1,5 +1,5 @@
 #include "kasm.h"
-#include "kstdint.h"
+#include <stdint.h>
 
 void serial_write_byte(uint8_t byte) {
 	// Wait until the transmit holding register is empty

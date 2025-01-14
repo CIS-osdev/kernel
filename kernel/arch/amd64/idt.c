@@ -1,4 +1,4 @@
-#include "kstdint.h"
+#include <stdint.h>
 
 // From https://wiki.osdev.org/Interrupt_Descriptor_Table#Structure_on_x86-64
 struct idt_64 {
