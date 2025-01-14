@@ -1,7 +1,7 @@
 #ifndef __K_ASM
 #define __K_ASM
 
-#include <kstdint.h>
+#include "kstdint.h"
 
 #if defined(__x86_64__)
 static inline void outb(uint16_t port, uint8_t val) {
@@ -35,21 +35,21 @@ static inline unsigned int inl(uint16_t port) {
 }
 
 // https://wiki.osdev.org/Inline_Assembly/Examples
-static inline void io_wait( ) {
+static inline void io_wait() {
 	outb(0x80, 0);
 }
 
-static inline void lidt(void* base, uint16_t size) {
+static inline void lidt(void *base, uint16_t size) {
 	// This function works in 32 and 64bit mode
 	struct {
 		uint16_t length;
-		void* base;
+		void *base;
 	} __attribute__((packed)) IDTR = { size, base };
 
 	asm("lidt %0" : : "m"(IDTR)); // let the compiler choose an addressing mode
 }
 
-static inline uint64_t rdtsc( ) {
+static inline uint64_t rdtsc() {
 	uint32_t low, high;
 	asm volatile("rdtsc" : "=a"(low), "=d"(high));
 	return ((uint64_t)high << 32) | low;
