@@ -2,7 +2,7 @@
 #define __K_HAL
 
 #include "kasm.h"
-#include "kstdint.h"
+#include <stdint.h>
 
 #if defined(__x86_64__)
 

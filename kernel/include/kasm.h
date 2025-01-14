@@ -1,7 +1,7 @@
 #ifndef __K_ASM
 #define __K_ASM
 
-#include "kstdint.h"
+#include <stdint.h>
 
 #if defined(__x86_64__)
 static inline void outb(uint16_t port, uint8_t val) {

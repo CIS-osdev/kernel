@@ -1,5 +1,5 @@
 #include "khal.h"
-#include "kstdint.h"
+#include <stdint.h>
 #include <stdarg.h>
 
 static char *itoa(uint64_t value, char *buf, uint8_t base) {

@@ -1,4 +1,4 @@
-#include "kstdint.h"
+#include <stdint.h>
 
 // We need memory manager and kernel lib first
 #if 0
