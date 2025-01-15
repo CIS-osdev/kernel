@@ -64,5 +64,11 @@ void cpu_interrupt_lock_force_release() {
 }
 
 void cpu_halt() {
-	asm("hlt");
+	asm volatile ("hlt");
+}
+
+void cpu_full_halt() {
+    reflock_acquire(&lock);
+    lock.allow_force_unlock = false;
+    cpu_halt();
 }
