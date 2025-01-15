@@ -1,6 +1,6 @@
 #include "khal.h"
-#include <stdint.h>
 #include <stdarg.h>
+#include <stdint.h>
 
 static char *itoa(uint64_t value, char *buf, uint8_t base) {
 	char *ptr = buf;

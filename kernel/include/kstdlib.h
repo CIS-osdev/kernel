@@ -4,7 +4,7 @@
 #include <ktypes.h>
 
 #define unlikely(x) __builtin_expect(x, 0)
-#define likely(x)   __builtin_expect(x, 1)
+#define likely(x) __builtin_expect(x, 1)
 
 /** @brief Ignore unused variable/static function.*/
 #define IGNORE_UNUSED(x) ((void)x)
@@ -17,10 +17,9 @@
  * @param [in] n - given number of bits.
  * @return number of bytes needed for containing n bits.
  */
-static inline usize bits_to_bytes(usize n)
-{
-    // assuming that a byte contains 8 bits
-    return (n + 7) >> 3;
+static inline usize bits_to_bytes(usize n) {
+	// assuming that a byte contains 8 bits
+	return (n + 7) >> 3;
 }
 
 /**
@@ -29,10 +28,9 @@ static inline usize bits_to_bytes(usize n)
  * @param [in] n - given number of bytes.
  * @return number of bits in n bytes.
  */
-static inline usize bytes_to_bits(usize n)
-{
-    // assuming that a byte contains 8 bits
-    return n << 3;
+static inline usize bytes_to_bits(usize n) {
+	// assuming that a byte contains 8 bits
+	return n << 3;
 }
 
 /**
@@ -49,9 +47,8 @@ static inline usize bytes_to_bits(usize n)
  * @param [out] value - given value to change.
  * @param [in] pos - given bit position to set.
  */
-static inline void set_bit(u32* value, i32 pos)
-{
-    *value |= (1U << pos);
+static inline void set_bit(u32 *value, i32 pos) {
+	*value |= (1U << pos);
 }
 
 /**
@@ -60,9 +57,8 @@ static inline void set_bit(u32* value, i32 pos)
  * @param [out] value - given value to change.
  * @param [in] pos - given bit position to clear.
  */
-static inline void clear_bit(u32* value, i32 pos)
-{
-    *value &= ~(1U << pos);
+static inline void clear_bit(u32 *value, i32 pos) {
+	*value &= ~(1U << pos);
 }
 
 /**
@@ -72,9 +68,8 @@ static inline void clear_bit(u32* value, i32 pos)
  * @param [in] pos - given bit position to test.
  * @return true if the bit is set, false otherwise.
  */
-static inline bool test_bit(u32 value, i32 pos)
-{
-    return (value & (1U << pos)) != 0;
+static inline bool test_bit(u32 value, i32 pos) {
+	return (value & (1U << pos)) != 0;
 }
 
 #endif /* __K_STDLIB */

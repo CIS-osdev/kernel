@@ -1,7 +1,7 @@
 #include "khal.h"
-#include <stdint.h>
 #include "kstdlib.h"
 #include <3rd/multiboot2.h>
+#include <stdint.h>
 
 #define CHECK_FLAG(flags, bit) ((flags) & (1 << (bit)))
 
