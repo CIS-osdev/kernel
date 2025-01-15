@@ -20,16 +20,16 @@
 #include "kreflock.h"
 #include "kstdlib.h"
 
-static inline void __cpu_enable_interrupt() {
+static inline void __cpu_enable_interrupts() {
 	asm volatile("sti");
 }
 
-static inline void __cpu_disable_interrupt() {
+static inline void __cpu_disable_interrupts() {
 	asm volatile("cli");
 }
 
 static reflock_t lock =
-    NEW_REFLOCK(__cpu_disable_interrupt, __cpu_enable_interrupt, false, true);
+    NEW_REFLOCK(__cpu_disable_interrupts, __cpu_enable_interrupts, false, true);
 
 bool cpu_interrupt_lock_acquired() {
 	if (unlikely(!reflock_validate(&lock))) {
@@ -68,7 +68,10 @@ void cpu_halt() {
 }
 
 void cpu_full_halt() {
-    reflock_acquire(&lock);
+    if (unlikely(!reflock_is_locked(&lock)))
+        reflock_acquire(&lock);
+    else
+        __cpu_disable_interrupts();
     lock.allow_force_unlock = false;
     cpu_halt();
 }
