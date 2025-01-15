@@ -18,7 +18,7 @@ void kernel_main64(uint64_t *multiboot2, uint32_t magic, void *esp,
 		serial_printf("[ERR]\n");
 	}
 
-	panic("AAAAAAAAAAAAAAAaa");
+	PANIC("AAAAAAAAAAAAAAAaa");
 
 	for (;;) {}
 }

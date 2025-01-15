@@ -48,13 +48,13 @@ void xmemcpy(void *dest, const void *src, size_t size, opsize_t opsize) {
 			             : "memory");
 			break;
 		case OPSIZE_DWORD:
-			asm volatile("rep movsd"
+			asm volatile("rep movsl"
 			             : "=&c"(d0), "=&D"(d1), "=&S"(d2)
 			             : "0"(size), "1"(dest), "2"(src)
 			             : "memory");
 			break;
 		case OPSIZE_QWORD:
-			asm volatile("rep movsd"
+			asm volatile("rep movsl"
 			             : "=&c"(d0), "=&D"(d1), "=&S"(d2)
 			             : "0"(size), "1"(dest), "2"(src)
 			             : "memory");

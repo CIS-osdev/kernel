@@ -28,7 +28,7 @@ typedef struct {
 	void (*on_unlock)();
 
 	const bool strict; // if strict, panic if released empty lock
-	const bool allow_force_unlock;
+	bool allow_force_unlock;
 
 	uint8_t data[12];
 } reflock_t;

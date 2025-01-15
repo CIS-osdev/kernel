@@ -9,5 +9,6 @@ extern void cpu_interrupt_lock_release();
 extern void cpu_interrupt_lock_force_release();
 
 void cpu_halt();
+void cpu_full_halt();
 
 #endif
