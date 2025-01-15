@@ -50,7 +50,7 @@ void reflock_acquire(reflock_t *lock) {
 	struct reflock_private *private = reflock_get_private_ptr(lock);
 
 	if (!reflock_validate_magic(lock)) {
-		panic("broken reflock (invalid magic)");
+		PANIC("broken reflock (invalid magic)");
 	}
 
 	if (!private->data.refcount && lock->on_lock) {
@@ -64,12 +64,12 @@ void reflock_release(reflock_t *lock) {
 	struct reflock_private *private = reflock_get_private_ptr(lock);
 
 	if (!reflock_validate_magic(lock)) {
-		panic("broken reflock (invalid magic field)");
+		PANIC("broken reflock (invalid magic field)");
 	}
 
 	if (!private->data.refcount) {
 		if (lock->strict) {
-			panic("Attempted to release empty strict reflock");
+			PANIC("Attempted to release empty strict reflock");
 		}
 
 		return;
@@ -89,7 +89,7 @@ void reflock_force_unlock(reflock_t *lock) {
 	struct reflock_private *private = reflock_get_private_ptr(lock);
 
 	if (!lock->allow_force_unlock) {
-		panic("Attempted disallowed force-unlock of a reflock");
+		PANIC("Attempted disallowed force-unlock of a reflock");
 	}
 
 	private->data.refcount = 0;
