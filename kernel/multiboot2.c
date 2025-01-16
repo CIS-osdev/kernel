@@ -9,7 +9,7 @@ static struct multiboot_tag *unary_tags[MULTIBOOT_TAG_TOTAL];
 
 #define CHECK_FLAG(flags, bit) ((flags) & (1 << (bit)))
 
-struct multiboot_tag_list *get_multiboot_tag(uint8_t tag_id) {
+struct multiboot_tag *get_multiboot_tag(uint8_t tag_id) {
 	if (tag_id < 0 || tag_id >= MULTIBOOT_TAG_TOTAL) {
 		return NULL;
 	}
@@ -42,7 +42,7 @@ int multiboot2_init(uint64_t *addr, uint32_t magic) {
 
 	// set all tags to NULL
 	memset(unary_tags, 0x00,
-	       sizeof(struct multiboot_tag_list *) * MULTIBOOT_TAG_TOTAL);
+	       sizeof(struct multiboot_tag *) * MULTIBOOT_TAG_TOTAL);
 
 	tag = (struct multiboot_tag *)(mbi_addr + sizeof(uint64_t));
 
