@@ -64,14 +64,14 @@ void cpu_interrupt_lock_force_release() {
 }
 
 void cpu_halt() {
-	asm volatile ("hlt");
+	asm volatile("hlt");
 }
 
 void cpu_full_halt() {
-    if (unlikely(!reflock_is_locked(&lock)))
-        reflock_acquire(&lock);
-    else
-        __cpu_disable_interrupts();
-    lock.allow_force_unlock = false;
-    cpu_halt();
+	if (unlikely(!reflock_is_locked(&lock)))
+		reflock_acquire(&lock);
+	else
+		__cpu_disable_interrupts();
+	lock.allow_force_unlock = false;
+	cpu_halt();
 }

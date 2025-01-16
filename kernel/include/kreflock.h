@@ -34,11 +34,11 @@ typedef struct {
 } reflock_t;
 
 #define NEW_REFLOCK(_on_lock, _on_unlock, _strict, _allow_force)               \
-	{                                                                          \
-		_on_lock, _on_unlock, _strict, _allow_force, {                         \
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0                                 \
-		}                                                                      \
-	}
+	{ _on_lock,                                                                \
+	  _on_unlock,                                                              \
+	  _strict,                                                                 \
+	  _allow_force,                                                            \
+	  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } }
 
 void reflock_make(reflock_t *lock);
 bool reflock_validate_magic(reflock_t *lock);

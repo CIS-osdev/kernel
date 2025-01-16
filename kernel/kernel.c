@@ -1,7 +1,7 @@
 #include "khal.h"
-#include <stdint.h>
 #include "kstring.h"
 #include "sys/panic.h"
+#include <stdint.h>
 
 int multiboot2_init(uint64_t *addr, uint32_t magic);
 
