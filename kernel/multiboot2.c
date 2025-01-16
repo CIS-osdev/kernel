@@ -3,6 +3,7 @@
 #include "khal.h"
 #include "kstdlib.h"
 #include "kstring.h"
+#include "sys/panic.h"
 #include <stdint.h>
 
 static struct multiboot_tag *unary_tags[MULTIBOOT_TAG_TOTAL];
@@ -67,6 +68,10 @@ int multiboot2_init(uint64_t *addr, uint32_t magic) {
 				serial_printf("Tag at 0x%x | %d\n", (uintptr_t)tag, tag->type);
 				break;
 		}
+
+		// In case I'm just stupid
+		if (unary_tags[tag->type])
+			PANIC("Duplicate multiboot tag during initialization"); 
 
 		// there can be more than one of those
 		// module tags will be handled separately after heap init
