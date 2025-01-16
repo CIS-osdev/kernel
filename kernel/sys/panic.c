@@ -15,8 +15,8 @@ void __attribute__((noreturn)) panic_int(uint8_t int_no, const char *msg) {
 	for (;;) cpu_halt();
 }
 
-void __attribute__((noreturn)) panic(const char *msg, const char *func,
-                                     const int line) {
+void __attribute__((noreturn))
+panic(const char *msg, const char *func, const int line) {
 	cpu_interrupt_lock_acquire();
 
 	serial_printf("\n\rKernel panic - %s in %s:%d\n", msg, func, line);

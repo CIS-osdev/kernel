@@ -87,7 +87,8 @@ int memcmp(const void *ptr1, const void *ptr2, size_t count) {
 
 size_t __attribute__((pure)) strlen(const char *s) {
 	int i;
-	for (i = 0; s[i] != '\0'; i++);
+	for (i = 0; s[i] != '\0'; i++)
+		;
 	return i;
 }
 
