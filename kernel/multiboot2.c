@@ -71,7 +71,7 @@ int multiboot2_init(uint64_t *addr, uint32_t magic) {
 
 		// In case I'm just stupid
 		if (unary_tags[tag->type])
-			PANIC("Duplicate multiboot tag during initialization"); 
+			PANIC("Duplicate multiboot tag during initialization");
 
 		// there can be more than one of those
 		// module tags will be handled separately after heap init
