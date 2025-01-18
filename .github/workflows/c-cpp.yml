@@ -24,3 +24,11 @@ jobs:
       run: make
     - name: run and test
       run: make clean && make && make test
+    - name: Versions
+      run: |
+        make -v
+        gcc -v
+        clang-format --version
+        xorriso --version
+        qemu-system-x86_64 -version
+        grub-mkrescue --version

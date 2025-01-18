@@ -3,7 +3,8 @@
 
 void serial_write_byte(uint8_t byte) {
 	// Wait until the transmit holding register is empty
-	while ((inb(0x3f8 + 5) & 0x20) == 0);
+	while ((inb(0x3f8 + 5) & 0x20) == 0)
+		;
 	outb(0x3f8, byte);
 }
 

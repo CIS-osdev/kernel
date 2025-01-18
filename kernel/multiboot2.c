@@ -108,6 +108,8 @@ void handle_basic_load_base_addr(struct multiboot_tag *tag) {
 	    (struct multiboot_tag_load_base_addr *)tag;
 	serial_printf("load_base_size: %u\n", base_addr->size);
 	serial_printf("load_base_addr: 0x%x\n", base_addr->load_base_addr);
+	serial_printf("Kernel: 0x%x-0x%x\n", base_addr->load_base_addr,
+	              base_addr->load_base_addr + base_addr->size);
 }
 
 void handle_mmap_tag(struct multiboot_tag *tag) {

@@ -84,6 +84,14 @@ jobs:
         make clean
         make
         make test
+    - name: Versions
+      run: |
+        make -v
+        gcc -v
+        clang-format --version
+        xorriso --version
+        qemu-system-x86_64 -version
+        grub-mkrescue --version
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
