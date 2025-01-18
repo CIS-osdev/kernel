@@ -1,9 +1,22 @@
+#include "multiboot2.h"
+#include "3rd/multiboot2.h"
 #include "khal.h"
 #include "kstdlib.h"
-#include <3rd/multiboot2.h>
+#include "kstring.h"
+#include "sys/panic.h"
 #include <stdint.h>
 
+static struct multiboot_tag *unary_tags[MULTIBOOT_TAG_TOTAL];
+
 #define CHECK_FLAG(flags, bit) ((flags) & (1 << (bit)))
+
+struct multiboot_tag *get_multiboot_tag(uint8_t tag_id) {
+	if (tag_id < 0 || tag_id >= MULTIBOOT_TAG_TOTAL) {
+		return NULL;
+	}
+
+	return unary_tags[tag_id];
+}
 
 void handle_cmdline_tag(struct multiboot_tag *tag);
 void handle_module_tag(struct multiboot_tag *tag);
@@ -28,6 +41,10 @@ int multiboot2_init(uint64_t *addr, uint32_t magic) {
 	uint64_t size = *addr;
 	serial_printf("Announced mbi size 0x%x\n", size);
 
+	// set all tags to NULL
+	memset(unary_tags, 0x00,
+	       sizeof(struct multiboot_tag *) * MULTIBOOT_TAG_TOTAL);
+
 	tag = (struct multiboot_tag *)(mbi_addr + sizeof(uint64_t));
 
 	while (tag->type != MULTIBOOT_TAG_TYPE_END) {
@@ -51,6 +68,14 @@ int multiboot2_init(uint64_t *addr, uint32_t magic) {
 				serial_printf("Tag at 0x%x | %d\n", (uintptr_t)tag, tag->type);
 				break;
 		}
+
+		// In case I'm just stupid
+		if (unary_tags[tag->type])
+			PANIC("Duplicate multiboot tag during initialization");
+
+		// there can be more than one of those
+		// module tags will be handled separately after heap init
+		if (tag->type != MULTIBOOT_TAG_TYPE_MODULE) unary_tags[tag->type] = tag;
 
 		// Move to the next tag
 		tag = (struct multiboot_tag *)((uintptr_t)tag) + ((tag->size + 7) & ~7);
