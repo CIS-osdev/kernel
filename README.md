@@ -1,5 +1,7 @@
 # kernel
 
+![](https://img.shields.io/github/languages/code-size/CIS-osdev/kernel) ![](https://img.shields.io/github/license/CIS-osdev/kernel)
+
 [![C/C++ CI](https://github.com/CIS-osdev/kernel/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/CIS-osdev/kernel/actions/workflows/c-cpp.yml)
 [![pages-build-deployment](https://github.com/CIS-osdev/kernel/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/CIS-osdev/kernel/actions/workflows/pages/pages-build-deployment)
 [![CodeQL Advanced](https://github.com/0Nera/cis-kernel/actions/workflows/codeql.yml/badge.svg)](https://github.com/0Nera/cis-kernel/actions/workflows/codeql.yml)
