@@ -19,6 +19,10 @@ typedef struct {
 sections_t kernel_sections[4];
 
 sections_t *sectons_init() {
+	// Why this halts cpu?
+	//memset(&kernel_section_bss_start, 0,
+	//       (uint64_t)&kernel_section_bss_end -
+	//           (uint64_t)&kernel_section_bss_start);
 	serial_printf("\t.text 0x%x-0x%x(%u)\n", &kernel_section_text_start,
 	              &kernel_section_text_end,
 	              &kernel_section_text_end - &kernel_section_text_start);
@@ -42,9 +46,6 @@ sections_t *sectons_init() {
 	              &kernel_section_bss_end - &kernel_section_bss_start);
 	kernel_sections[3] =
 	    (sections_t){ kernel_section_bss_start, kernel_section_bss_end };
-
-	memset(&kernel_section_bss_start, 0,
-	       &kernel_section_bss_end - &kernel_section_bss_start);
 
 	return (sections_t *)&kernel_sections;
 }

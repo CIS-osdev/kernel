@@ -14,8 +14,6 @@ void kernel_main64(uint64_t *multiboot2, uint32_t magic, void *esp,
 
 	int status = multiboot2_init(multiboot2, magic);
 
-	sectons_init();
-
 	if (status) {
 		serial_printf("[OK]\n");
 	} else {
